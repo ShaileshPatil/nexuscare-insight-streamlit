@@ -1,0 +1,390 @@
+[
+  {
+    "case_id": "NC-2026-08841",
+    "name": "Margaret T.",
+    "age": 74,
+    "risk_tier": "High-Risk / Complex",
+    "risk_score": 0.87,
+    "top_factors": [
+      "Age 74 with three chronic conditions (CHF, CKD stage 3, type 2 diabetes)",
+      "3 emergency department visits in the past 90 days",
+      "New high-risk medication at discharge: IV-to-oral diuretic conversion (furosemide 40 mg BID)",
+      "Lives alone with limited caregiver support noted by case management",
+      "Elevated NT-proBNP at discharge (2,450 pg/mL) and 2.1 kg net weight gain during stay"
+    ],
+    "extracted_facts": [
+      {
+        "label": "Principal diagnosis",
+        "value": "Acute-on-chronic systolic heart failure (CHF) exacerbation"
+      },
+      {
+        "label": "Discharge disposition",
+        "value": "Home, independent in ADLs; lives alone"
+      },
+      {
+        "label": "NT-proBNP at discharge",
+        "value": "2,450 pg/mL \u2014 markedly elevated (admission 5,120)",
+        "red_flag": true
+      },
+      {
+        "label": "Weight trend",
+        "value": "+2.1 kg net gain during admission; daily morning weights ordered",
+        "red_flag": true
+      },
+      {
+        "label": "New medication",
+        "value": "Furosemide 40 mg PO BID (IV-to-oral conversion); K+ 3.4 mEq/L on discharge labs",
+        "red_flag": true
+      },
+      {
+        "label": "Ejection fraction",
+        "value": "35\u201340% on echocardiogram 08/17/2026"
+      },
+      {
+        "label": "Discharge instructions",
+        "value": "2 g sodium diet, 1.5 L/day fluid restriction, daily weights, symptom diary"
+      },
+      {
+        "label": "Cardiology follow-up",
+        "value": "Not scheduled at time of discharge \u2014 requires coordinator action",
+        "red_flag": true
+      }
+    ],
+    "retrieved_citations": [
+      {
+        "claim": "Readmission risk is elevated due to recent ED utilization and multiple comorbidities.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a74.1 CHF Readmission Prevention",
+        "excerpt": "Members with \u22652 ED visits in 90 days and a primary cardiac diagnosis carry a 30-day readmission risk of 32\u201338% and should be enrolled in the high-intensity post-discharge pathway with nurse care manager oversight."
+      },
+      {
+        "claim": "The IV-to-oral diuretic conversion requires early labs and a 7-day provider follow-up.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a74.3 Medication Reconciliation",
+        "excerpt": "For IV-to-oral loop diuretic conversions at discharge, schedule provider follow-up within 7 days and a basic metabolic panel within 5\u20137 days to monitor potassium and renal function."
+      },
+      {
+        "claim": "Marked BNP elevation and weight gain at discharge warrant closer surveillance.",
+        "source": "Discharge Summary \u2014 St. Vincent Medical Center, 08/18/2026",
+        "excerpt": "NT-proBNP 2,450 pg/mL at discharge (admission 5,120). Net fluid gain 2.1 kg. Patient educated on fluid restriction and daily weights; verbalized understanding. Daughter assists with medications on weekends only."
+      },
+      {
+        "claim": "Telephonic outreach within 48 hours is required for High-Risk / Complex members.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a72.2 Outreach SLAs",
+        "excerpt": "High-Risk / Complex members: initial telephonic outreach within 48 hours of discharge. Escalate to a nurse care manager if the member reports weight gain >2 lb in 24 hours, worsening dyspnea, or new orthopnea."
+      }
+    ],
+    "brief_text": "Margaret T. is a 74-year-old member discharged on 08/18/2026 after a 4-day admission for acute-on-chronic systolic heart failure. Her 30-day readmission risk is elevated (score 0.87 \u2014 High-Risk / Complex), driven by three ED visits in the past 90 days, a CHF + CKD + diabetes comorbidity cluster, a new IV-to-oral diuretic conversion, and limited caregiver support. Discharge labs showed markedly elevated NT-proBNP (2,450 pg/mL) and borderline potassium (3.4 mEq/L) on high-dose furosemide, and her cardiology follow-up was not scheduled before she left the hospital. Recommend outreach within 48 hours, confirmation of a cardiology appointment within 7 days, a BMP in 5\u20137 days, and enrollment in the high-intensity post-discharge pathway per playbook \u00a74.1.",
+    "outreach_message": "Hello Margaret, this is your Humana care coordination team checking in after your recent hospital stay. We want to make sure your recovery at home is going smoothly. Please remember to weigh yourself each morning, follow your fluid and sodium guidelines, and take your new water pill (furosemide) twice a day as prescribed. We would like to help you schedule your heart doctor visit within the next week and a quick blood draw to check your potassium. If you gain more than 2 pounds overnight, feel more short of breath, or notice new swelling, please call us right away at the number on your member card. Can we confirm a good time to talk this week? We are here to help.",
+    "validation_result": {
+      "status": "passed_with_warnings",
+      "checks": [
+        {
+          "name": "Medication names match discharge orders",
+          "passed": true,
+          "detail": "Furosemide 40 mg BID verified against discharge MAR"
+        },
+        {
+          "name": "No PHI beyond minimum necessary",
+          "passed": true,
+          "detail": "Outreach message excludes SSN, MRN, and street address"
+        },
+        {
+          "name": "Reading level at or below 8th grade",
+          "passed": true,
+          "detail": "Flesch-Kincaid grade level 6.8"
+        },
+        {
+          "name": "Follow-up interval within playbook SLA",
+          "passed": false,
+          "detail": "Cardiology follow-up unscheduled at discharge \u2014 outreach must confirm a booking within 7 days"
+        }
+      ]
+    },
+    "critic_result": {
+      "score": 0.91,
+      "verdict": "Approve with conditions",
+      "notes": "Brief is well-grounded: every risk statement maps to a playbook section or the discharge summary. Condition: the coordinator must verify the cardiology appointment is booked during the outreach call, because no appointment currently exists in the scheduling system."
+    },
+    "requires_human_review": true,
+    "agent_trace": [
+      {
+        "node": "Risk Scoring",
+        "decision": "Scored 0.87 \u2192 High-Risk / Complex. Top contributors: 90-day ED visits (3), CHF + CKD + T2DM cluster, lives alone.",
+        "latency_ms": 1240
+      },
+      {
+        "node": "Clinical Extraction",
+        "decision": "Extracted 8 structured facts from the discharge summary; flagged 4 red-flag items (NT-proBNP, weight gain, hypokalemia on diuretic, unscheduled follow-up).",
+        "latency_ms": 2310
+      },
+      {
+        "node": "Recommendation Drafting",
+        "decision": "Retrieved 4 citations (playbook \u00a74.1, \u00a74.3, \u00a72.2 + discharge summary) and drafted the coordinator brief and member outreach message.",
+        "latency_ms": 3120
+      },
+      {
+        "node": "Validation",
+        "decision": "3 of 4 automated checks passed; 1 warning \u2014 cardiology follow-up interval is outside SLA until the appointment is confirmed.",
+        "latency_ms": 980
+      },
+      {
+        "node": "Scheduling",
+        "decision": "Proposed follow-up: Wed Aug 26, 2026 at 10:30 AM \u2014 Dr. Anita Patel (Cardiology), St. Vincent Heart Clinic. Awaiting coordinator confirmation.",
+        "latency_ms": 1450
+      }
+    ]
+  },
+  {
+    "case_id": "NC-2026-08862",
+    "name": "James R.",
+    "age": 61,
+    "risk_tier": "Medium-Risk",
+    "risk_score": 0.54,
+    "top_factors": [
+      "COPD (GOLD stage 3) with 2 inpatient admissions in the past 12 months",
+      "Active tobacco use; quit date not yet set",
+      "New home oxygen prescription at discharge (2 L/min nasal cannula)",
+      "14-day prednisone taper \u2014 adherence risk",
+      "Lives with spouse; strong caregiver support (protective factor)"
+    ],
+    "extracted_facts": [
+      {
+        "label": "Principal diagnosis",
+        "value": "Acute exacerbation of COPD (AECOPD)"
+      },
+      {
+        "label": "Discharge disposition",
+        "value": "Home with spouse; independent in ADLs"
+      },
+      {
+        "label": "Home oxygen",
+        "value": "New order: 2 L/min via nasal cannula; equipment delivery scheduled 08/21/2026",
+        "red_flag": true
+      },
+      {
+        "label": "SpO2 at discharge",
+        "value": "89% on room air \u2014 at the lower bound of discharge threshold",
+        "red_flag": true
+      },
+      {
+        "label": "Steroid taper",
+        "value": "Prednisone 40 mg \u00d7 5 days, then taper over 9 days"
+      },
+      {
+        "label": "Inhaler regimen",
+        "value": "Tiotropium/olodaterol daily + albuterol PRN; technique reviewed with respiratory therapy"
+      },
+      {
+        "label": "Tobacco status",
+        "value": "Active smoker, ~1 pack/day; declined cessation counseling during stay"
+      },
+      {
+        "label": "Pulmonology follow-up",
+        "value": "Scheduled 09/02/2026 \u2014 confirmed in discharge summary"
+      }
+    ],
+    "retrieved_citations": [
+      {
+        "claim": "Repeat admissions plus new home oxygen place this member in the Medium-Risk tier.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a75.2 COPD Pathway",
+        "excerpt": "Members with 2+ COPD admissions in 12 months, or a new home oxygen order at discharge, qualify for the Medium-Risk pathway: outreach within 72 hours and a follow-up call at day 7."
+      },
+      {
+        "claim": "Oxygen equipment delivery must be verified within 48 hours.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a75.4 Durable Medical Equipment",
+        "excerpt": "For new home oxygen starts, the coordinator must confirm DME delivery within 48 hours of discharge and document the vendor, delivery time, and member education status."
+      },
+      {
+        "claim": "Borderline SpO2 at discharge supports a 7-day check-in call.",
+        "source": "Discharge Summary \u2014 Mercy General Hospital, 08/20/2026",
+        "excerpt": "SpO2 89% on room air, 93% on 2 L NC. Patient ambulating independently. Steroid taper and inhaler regimen reviewed. Spouse present for teach-back and verbalized instructions."
+      },
+      {
+        "claim": "Tobacco cessation referral should be offered at every post-discharge contact.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a75.2 COPD Pathway",
+        "excerpt": "Offer tobacco cessation program enrollment at every contact for members with COPD who actively use tobacco; document declines and re-offer at the next touchpoint."
+      }
+    ],
+    "brief_text": "James R. is a 61-year-old member discharged on 08/20/2026 after a 3-day admission for an acute COPD exacerbation. His 30-day readmission risk is moderate (score 0.54 \u2014 Medium-Risk), driven by two COPD admissions in the past year, active tobacco use, a new home oxygen order, and a 14-day prednisone taper. SpO2 at discharge was borderline (89% on room air), but his pulmonology follow-up on 09/02/2026 is already confirmed, and he has strong caregiver support from his spouse. Recommend outreach within 72 hours to verify oxygen equipment delivery (scheduled 08/21), review the steroid taper schedule, and offer tobacco cessation program enrollment per playbook \u00a75.2.",
+    "outreach_message": "Hello James, this is your Humana care coordination team following up on your recent hospital stay for your breathing. We want to confirm your oxygen equipment was delivered on Friday and that you are comfortable using it. Please keep taking your prednisone exactly on the taper schedule your care team gave you, and keep using your daily inhaler even on good days. Your lung doctor visit is already set for September 2nd. If you feel more short of breath, notice your oxygen readings dropping below 88%, or have a fever, please call us right away. We would also be glad to tell you about our free program to help members quit smoking whenever you are ready. Is now a good time for a quick check-in?",
+    "validation_result": {
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Medication names match discharge orders",
+          "passed": true,
+          "detail": "Prednisone taper and inhaler regimen verified against discharge MAR"
+        },
+        {
+          "name": "No PHI beyond minimum necessary",
+          "passed": true,
+          "detail": "Outreach message excludes SSN, MRN, and street address"
+        },
+        {
+          "name": "Reading level at or below 8th grade",
+          "passed": true,
+          "detail": "Flesch-Kincaid grade level 7.1"
+        },
+        {
+          "name": "Follow-up interval within playbook SLA",
+          "passed": true,
+          "detail": "Pulmonology visit 09/02/2026 within the 14-day Medium-Risk window"
+        }
+      ]
+    },
+    "critic_result": {
+      "score": 0.88,
+      "verdict": "Approve",
+      "notes": "Brief accurately reflects the Medium-Risk pathway. All claims trace to playbook \u00a75.2/\u00a75.4 or the discharge summary. Minor note: outreach message could mention the day-7 check-in call explicitly; not blocking."
+    },
+    "requires_human_review": false,
+    "agent_trace": [
+      {
+        "node": "Risk Scoring",
+        "decision": "Scored 0.54 \u2192 Medium-Risk. Top contributors: 2 COPD admissions in 12 months, new home oxygen, active tobacco use.",
+        "latency_ms": 1085
+      },
+      {
+        "node": "Clinical Extraction",
+        "decision": "Extracted 8 structured facts from the discharge summary; flagged 2 red-flag items (new home oxygen start, borderline SpO2).",
+        "latency_ms": 1975
+      },
+      {
+        "node": "Recommendation Drafting",
+        "decision": "Retrieved 4 citations (playbook \u00a75.2, \u00a75.4 + discharge summary) and drafted the coordinator brief and member outreach message.",
+        "latency_ms": 2740
+      },
+      {
+        "node": "Validation",
+        "decision": "4 of 4 automated checks passed; outreach message cleared for coordinator review.",
+        "latency_ms": 860
+      },
+      {
+        "node": "Scheduling",
+        "decision": "Confirmed existing follow-up: Wed Sep 2, 2026 at 2:15 PM \u2014 Dr. Marcus Webb (Pulmonology), Mercy Pulmonary Associates. Added day-7 check-in call Aug 27.",
+        "latency_ms": 920
+      }
+    ]
+  },
+  {
+    "case_id": "NC-2026-08870",
+    "name": "Linda K.",
+    "age": 55,
+    "risk_tier": "Low-Risk / Straightforward",
+    "risk_score": 0.18,
+    "top_factors": [
+      "Uncomplicated elective laparoscopic cholecystectomy (ambulatory)",
+      "No chronic conditions on the problem list",
+      "First inpatient or surgical encounter in 5+ years",
+      "Strong social support; spouse at home during recovery",
+      "Employed full-time; planned return to work in 2 weeks"
+    ],
+    "extracted_facts": [
+      {
+        "label": "Principal procedure",
+        "value": "Laparoscopic cholecystectomy, uncomplicated; discharged same day"
+      },
+      {
+        "label": "Discharge disposition",
+        "value": "Home with spouse; ambulating independently"
+      },
+      {
+        "label": "Pain control",
+        "value": "Acetaminophen + ibuprofen; no opioids prescribed at discharge"
+      },
+      {
+        "label": "Activity restrictions",
+        "value": "No lifting >10 lb for 2 weeks; walking encouraged"
+      },
+      {
+        "label": "Wound care",
+        "value": "Steri-Strips in place; keep dry for 48 hours"
+      },
+      {
+        "label": "Warning signs reviewed",
+        "value": "Fever >100.4\u00b0F, jaundice, worsening abdominal pain \u2014 teach-back completed"
+      },
+      {
+        "label": "Surgeon follow-up",
+        "value": "Scheduled 09/04/2026 \u2014 confirmed in discharge summary"
+      }
+    ],
+    "retrieved_citations": [
+      {
+        "claim": "This case qualifies for the Low-Risk / Straightforward pathway.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a77.1 Routine Surgical Pathway",
+        "excerpt": "Elective ambulatory procedures in members without chronic conditions qualify for the Low-Risk pathway: a single outreach touchpoint within 5 business days, no nurse care manager assignment."
+      },
+      {
+        "claim": "No opioid prescription at discharge removes the medication-safety review step.",
+        "source": "Discharge Summary \u2014 Riverside Surgical Center, 08/21/2026",
+        "excerpt": "Patient tolerated the procedure well. Pain controlled with acetaminophen and ibuprofen only; no opioids prescribed. Diet advanced as tolerated. Teach-back on warning signs completed with spouse present."
+      },
+      {
+        "claim": "A single scripted outreach touchpoint satisfies the pathway SLA.",
+        "source": "Humana Post-Acute Care Playbook v3.2 \u2014 \u00a72.2 Outreach SLAs",
+        "excerpt": "Low-Risk / Straightforward members: one telephonic or digital outreach within 5 business days of discharge. Auto-send of the approved outreach message is permitted without coordinator review."
+      }
+    ],
+    "brief_text": "Linda K. is a 55-year-old member discharged on 08/21/2026 after an uncomplicated, same-day laparoscopic cholecystectomy. Her 30-day readmission risk is low (score 0.18 \u2014 Low-Risk / Straightforward): she has no chronic conditions, no recent utilization, and strong home support. Pain is managed without opioids, activity restrictions are standard, and her surgeon follow-up on 09/04/2026 is already confirmed. Per playbook \u00a77.1, a single outreach touchpoint within 5 business days satisfies the pathway; the drafted message is eligible for auto-send pending coordinator approval.",
+    "outreach_message": "Hello Linda, this is your Humana care coordination team checking in after your gallbladder surgery. We hope your recovery at home is going well. As a reminder: avoid lifting anything heavier than about 10 pounds for two weeks, keep your bandages dry for the first couple of days, and walking a little each day is great for recovery. Your follow-up with your surgeon is already set for September 4th. If you develop a fever over 100.4\u00b0F, yellowing of the skin or eyes, or worsening belly pain, please call your surgeon or us right away. Is there anything we can help you with today?",
+    "validation_result": {
+      "status": "passed",
+      "checks": [
+        {
+          "name": "Medication names match discharge orders",
+          "passed": true,
+          "detail": "Acetaminophen/ibuprofen-only regimen verified against discharge orders"
+        },
+        {
+          "name": "No PHI beyond minimum necessary",
+          "passed": true,
+          "detail": "Outreach message excludes SSN, MRN, and street address"
+        },
+        {
+          "name": "Reading level at or below 8th grade",
+          "passed": true,
+          "detail": "Flesch-Kincaid grade level 6.2"
+        },
+        {
+          "name": "Follow-up interval within playbook SLA",
+          "passed": true,
+          "detail": "Surgeon visit 09/04/2026 within the routine surgical window"
+        }
+      ]
+    },
+    "critic_result": {
+      "score": 0.95,
+      "verdict": "Approve \u2014 auto-send eligible",
+      "notes": "Brief and outreach message are fully grounded in the discharge summary and playbook \u00a77.1/\u00a72.2. No red-flag facts extracted. Eligible for auto-send under the Low-Risk pathway."
+    },
+    "requires_human_review": false,
+    "agent_trace": [
+      {
+        "node": "Risk Scoring",
+        "decision": "Scored 0.18 \u2192 Low-Risk / Straightforward. No chronic conditions, no recent utilization, strong support network.",
+        "latency_ms": 890
+      },
+      {
+        "node": "Clinical Extraction",
+        "decision": "Extracted 7 structured facts from the discharge summary; no red-flag items identified.",
+        "latency_ms": 1620
+      },
+      {
+        "node": "Recommendation Drafting",
+        "decision": "Retrieved 3 citations (playbook \u00a77.1, \u00a72.2 + discharge summary) and drafted the coordinator brief and member outreach message.",
+        "latency_ms": 2140
+      },
+      {
+        "node": "Validation",
+        "decision": "4 of 4 automated checks passed; message marked auto-send eligible under the Low-Risk pathway.",
+        "latency_ms": 745
+      },
+      {
+        "node": "Scheduling",
+        "decision": "Skipped \u2014 surgeon follow-up already confirmed in the discharge summary (Fri Sep 4, 2026 at 9:00 AM, Dr. Elena Ruiz, General Surgery, Riverside Surgical Center). No new scheduling action needed.",
+        "latency_ms": 680,
+        "status": "skipped"
+      }
+    ]
+  }
+]
