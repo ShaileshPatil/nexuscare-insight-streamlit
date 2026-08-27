@@ -3,6 +3,23 @@ from pathlib import Path
 
 import streamlit as st
 
+# ---------------------------------------------------------------------------
+# Fix: when an f-string built for unsafe_allow_html markdown contains a
+# conditionally-empty placeholder (e.g. a badge that's "" for some cases),
+# that line becomes blank. CommonMark treats a blank line as the end of a
+# raw-HTML block, so everything after it gets parsed as plain indented text
+# instead of HTML — showing up as literal code on screen. Stripping blank
+# lines before handing the string to Streamlit's markdown renderer avoids
+# this for every call site in this file.
+_original_markdown = st.markdown
+
+def _markdown_no_blank_lines(body, *args, **kwargs):
+    if kwargs.get("unsafe_allow_html") and isinstance(body, str):
+        body = "\n".join(line for line in body.split("\n") if line.strip() != "")
+    return _original_markdown(body, *args, **kwargs)
+
+st.markdown = _markdown_no_blank_lines
+
 st.set_page_config(
     page_title="Discharge Worklist — NexusCare AI",
     page_icon="✚",
